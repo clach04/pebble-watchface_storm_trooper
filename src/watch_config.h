@@ -11,6 +11,9 @@
 #define IMAGE_RES_X 144  /* NOTE if image res changes - this needs to change too! */
 #define IMAGE_RES_Y 155  /* NOTE if image res changes - this needs to change too! */
 
+
+#define BT_DISCONNECT_IMAGE RESOURCE_ID_IMAGE_BT_DISCONNECT
+
 //#define NO_BATTERY
 //#define NO_DATE
 
