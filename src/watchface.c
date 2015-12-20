@@ -7,7 +7,7 @@
 
 
 #ifdef PBL_BW
-    #define GColorFromHEX(int_color) int_color == 0 ? GColorBlack : GColorWhite
+//    #define GColorFromHEX(int_color) int_color == 0 ? GColorBlack : GColorWhite
 #endif /* PBL_BW */
 
 Window    *main_window=NULL;
