@@ -8,8 +8,8 @@
 
 #define BG_IMAGE RESOURCE_ID_IMAGE_MAIN
 /* storm_trooper_pebble_time_144x155  */
-#define IMAGE_RES_X 144  /* NOTE if image res changes - this needs to change too! */
-#define IMAGE_RES_Y 155  /* NOTE if image res changes - this needs to change too! */
+#define IMAGE_RES_X 123  /* NOTE if image res changes - this needs to change too! */
+#define IMAGE_RES_Y 132  /* NOTE if image res changes - this needs to change too! */
 
 
 #define BT_DISCONNECT_IMAGE RESOURCE_ID_IMAGE_BT_DISCONNECT
@@ -17,7 +17,7 @@
 //#define NO_BATTERY
 //#define NO_DATE
 
-#define FONT_SYSTEM_NAME FONT_KEY_BITHAM_30_BLACK /* works well if 144x144 image is used above, little wasted space */
+//#define FONT_SYSTEM_NAME FONT_KEY_BITHAM_30_BLACK /* works well if 144x144 image is used above, little wasted space */
 
 #define BAT_FMT_STR "%d%%"
 
@@ -43,9 +43,12 @@
     /* Image at top of screen, centered horizontally */
     #define BG_IMAGE_GRECT GRect((144 - IMAGE_RES_X) / 2, 0,  IMAGE_RES_X, IMAGE_RES_Y)  // use same size as image. On Aplite can determine this at runtime but not Basalt
 
-    #define CLOCK_POS GRect(0, 136, 144, 168) /* bottom of screen for FONT_KEY_BITHAM_30_BLACK */
+    //#define CLOCK_POS GRect(0, 136, 144, 168) /* bottom of screen for FONT_KEY_BITHAM_30_BLACK */
+    #define CLOCK_POS GRect(0, 118, 144, 168) /* bottom of screen for FONT_KEY_ROBOTO_BOLD_SUBSET_49 with one pixel border on bottom */
 
-    #define BT_DISCONNECT_IMAGE_GRECT GRect(144 - 20, 138, 20, 30)
+    //#define BT_DISCONNECT_IMAGE_GRECT GRect(144 - 20, 138, 20, 30)
+    #define BT_DISCONNECT_IMAGE_GRECT GRect(144 - 20, 168 - (2 * 30 + 4), 20, 30)
+
     #define BT_POS GRect(0, 120, 144, 168) /* probably taller than really needed */
     #define DATE_POS GRect(0, 0, 144, 168) /* probably taller than really needed */
     #define BAT_POS GRect(0, 0, 144, 168) /* probably taller than really needed */
