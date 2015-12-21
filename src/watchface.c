@@ -7,10 +7,12 @@
 
 
 #ifdef PBL_BW
-//    #define GColorFromHEX(int_color) int_color == 0 ? GColorBlack : GColorWhite
+    #ifndef GColorFromHEX
+        /* Pre SDk 3.8 */
+        #define GColorFromHEX(int_color) int_color == 0 ? GColorBlack : GColorWhite
+    #endif /* GColorFromHEX */
 #endif /* PBL_BW */
 
-Window *global_window=NULL;
 Window    *main_window=NULL;
 TextLayer *time_layer=NULL;
 TextLayer *date_layer=NULL;
@@ -63,10 +65,14 @@ char * debug_time_list[] = {
 };
 #endif /* DEBUG_TIME */
 
+/* TODO resequence? */
+void setup_bt_image(Window *window, uint32_t resource_id, GRect bounds);
+void cleanup_bt_image();
+
+
 #ifdef USE_SHADOW_TIME_EFFECT
 static EffectLayer* effect_layer=NULL;
 static EffectOffset effect_offset;
-
 
 void setup_effects(Window *window)
 {
@@ -131,6 +137,14 @@ void handle_bluetooth(bool connected)
 
 void setup_bluetooth(Window *window)
 {
+#ifdef BT_DISCONNECT_IMAGE
+    #ifdef BT_DISCONNECT_IMAGE_GRECT
+        setup_bt_image(window, BT_DISCONNECT_IMAGE, BT_DISCONNECT_IMAGE_GRECT);
+    #else /* BT_DISCONNECT_IMAGE_GRECT */
+        setup_bt_image(window, BT_DISCONNECT_IMAGE, GRectZero);
+    #endif /* BT_DISCONNECT_IMAGE_GRECT */
+#else
+    /* text */
     bluetooth_tlayer = text_layer_create(BT_POS);
     text_layer_set_text_color(bluetooth_tlayer, time_color);
     text_layer_set_background_color(bluetooth_tlayer, GColorClear);
@@ -138,6 +152,7 @@ void setup_bluetooth(Window *window)
     text_layer_set_text_alignment(bluetooth_tlayer, BT_ALIGN);
     layer_add_child(window_get_root_layer(window), text_layer_get_layer(bluetooth_tlayer));
     text_layer_set_text(bluetooth_tlayer, "");
+#endif /* BT_DISCONNECT_IMAGE */
 
     handle_bluetooth(bluetooth_connection_service_peek());
     bluetooth_connection_service_subscribe(handle_bluetooth);
@@ -146,7 +161,11 @@ void setup_bluetooth(Window *window)
 void cleanup_bluetooth()
 {
     bluetooth_connection_service_unsubscribe();
+#ifdef BT_DISCONNECT_IMAGE
+    cleanup_bt_image();
+#else
     text_layer_destroy(bluetooth_tlayer);
+#endif /* BT_DISCONNECT_IMAGE */
 }
 
 void handle_battery(BatteryChargeState charge_state) {
@@ -272,6 +291,7 @@ void cleanup_bg_image()
     }
 }
 
+#ifdef BT_DISCONNECT_IMAGE
 /*
 ** If bounds is GRectZero then use whole watch screen, auto centered
 */
@@ -292,7 +312,7 @@ void setup_bt_image(Window *window, uint32_t resource_id, GRect bounds)
     APP_LOG(APP_LOG_LEVEL_DEBUG, "%s() bounds x=%d, y=%d, w=%d, h=%d", __func__, bounds.origin.x, bounds.origin.y, bounds.size.w, bounds.size.h);
     bluetooth_blayer = bitmap_layer_create(bounds);
 
-    //bitmap_layer_set_bitmap(bluetooth_blayer, bluetooth_disconnect_bitmap);
+    /* Do not attached image to layer (yet...) */
     bitmap_layer_set_bitmap(bluetooth_blayer, NULL);
 
 #ifdef PBL_BW
@@ -312,12 +332,12 @@ void cleanup_bt_image()
     }
 
     /* Destroy BitmapLayer */
-    if (background_layer)
+    if (bluetooth_blayer)
     {
         bitmap_layer_destroy(bluetooth_blayer);
     }
 }
-
+#endif /* BT_DISCONNECT_IMAGE_GRECT */
 
 void update_time() {
     // Get a tm structure
@@ -383,7 +403,6 @@ void update_time() {
 }
 
 void main_window_load(Window *window) {
-    global_window = window;
     window_set_background_color(window, background_color);
 
 #ifdef BG_IMAGE
@@ -393,14 +412,6 @@ void main_window_load(Window *window) {
         setup_bg_image(window, BG_IMAGE, GRectZero);
     #endif /* BG_IMAGE_GRECT */
 #endif /* BG_IMAGE */
-
-#ifdef BT_DISCONNECT_IMAGE
-    #ifdef BT_DISCONNECT_IMAGE_GRECT
-        setup_bt_image(window, BT_DISCONNECT_IMAGE, BT_DISCONNECT_IMAGE_GRECT);
-    #else /* BT_DISCONNECT_IMAGE_GRECT */
-        setup_bt_image(window, BT_DISCONNECT_IMAGE, GRectZero);
-    #endif /* BT_DISCONNECT_IMAGE_GRECT */
-#endif /* BT_DISCONNECT_IMAGE */
 
     // Create time TextLayer
     time_layer = text_layer_create(CLOCK_POS);
@@ -429,7 +440,9 @@ void main_window_load(Window *window) {
 #ifndef NO_BATTERY
     setup_battery(window);
 #endif /* NO_BATTERY */
+
 #ifndef NO_BLUETOOTH
+    /* setup BT layer AFTER (i.e. on top of) time layer */
     setup_bluetooth(window);
 #endif /* NO_BLUETOOTH */
 
@@ -469,10 +482,6 @@ void main_window_unload(Window *window) {
 #ifdef BG_IMAGE
     cleanup_bg_image();
 #endif /* BG_IMAGE */
-
-#ifdef BT_DISCONNECT_IMAGE
-    cleanup_bt_image();
-#endif /* BT_DISCONNECT_IMAGE */
 
     /* Destroy TextLayers */
     text_layer_destroy(time_layer);
