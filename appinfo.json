@@ -13,12 +13,6 @@
     "resources": {
         "media": [
             {
-                "file": "images/bluetooth_disconnect",
-                "name": "IMAGE_BT_DISCONNECT",
-                "targetPlatforms": null,
-                "type": "bitmap"
-            },
-            {
                 "file": "images/storm_trooper.png",
                 "name": "IMAGE_MAIN",
                 "targetPlatforms": null,
@@ -28,6 +22,12 @@
                 "file": "images/icon_28x28.png",
                 "menuIcon": true,
                 "name": "IMAGE_ICON",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
+                "file": "images/bluetooth_disconnect",
+                "name": "IMAGE_BT_DISCONNECT",
                 "targetPlatforms": null,
                 "type": "bitmap"
             }

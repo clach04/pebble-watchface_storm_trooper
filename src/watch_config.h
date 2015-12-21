@@ -45,6 +45,7 @@
 
     #define CLOCK_POS GRect(0, 136, 144, 168) /* bottom of screen for FONT_KEY_BITHAM_30_BLACK */
 
+    #define BT_DISCONNECT_IMAGE_GRECT GRect(144 - 20, 138, 20, 30)
     #define BT_POS GRect(0, 120, 144, 168) /* probably taller than really needed */
     #define DATE_POS GRect(0, 0, 144, 168) /* probably taller than really needed */
     #define BAT_POS GRect(0, 0, 144, 168) /* probably taller than really needed */
