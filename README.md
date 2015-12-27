@@ -1,8 +1,3 @@
-The Storm design by Skylar Hogan.
+Storm Trooper Pebble watchface.
 
-I liked the picture so I wanted to make a watchface of it.
-
-Go buy a shirt from http://shirt.woot.com/offers/the-storm
-
-
-![](storm_trooper_24bpp.png)
+![](storm_trooper.svg)

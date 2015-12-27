@@ -7,9 +7,12 @@
 #undef DEBUG_TIME
 
 #define BG_IMAGE RESOURCE_ID_IMAGE_MAIN
-/* storm_trooper_pebble_time_144x155  */
-#define IMAGE_RES_X 123  /* NOTE if image res changes - this needs to change too! */
+#define IMAGE_RES_X 125  /* NOTE if image res changes - this needs to change too! */
 #define IMAGE_RES_Y 132  /* NOTE if image res changes - this needs to change too! */
+
+
+#define DEFAULT_TIME_COLOR GColorBlack
+#define DEFAULT_BACKGROUND_COLOR GColorWhite
 
 
 #define BT_DISCONNECT_IMAGE RESOURCE_ID_IMAGE_BT_DISCONNECT
