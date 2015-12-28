@@ -36,11 +36,10 @@
     "sdkVersion": "3",
     "shortName": "Storm Trooper",
     "targetPlatforms": [
-        "aplite",
         "basalt",
         "chalk"
     ],
-    "uuid": "1be7f172-9563-4371-ad7f-8349f47a8400",
+    "uuid": "b5adffd1-9e0d-44ec-a015-c87a02a85c7a",
     "versionLabel": "0.1",
     "watchapp": {
         "watchface": true

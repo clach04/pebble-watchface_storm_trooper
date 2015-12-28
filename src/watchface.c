@@ -1,6 +1,9 @@
 #include <pebble.h>
 #include "watchface.h"
 
+/* https://github.com/rebootsramblings/GBitmap-Colour-Palette-Manipulator */
+#include "gbitmap_color_palette_manipulator.h"
+
 #ifdef USE_SHADOW_TIME_EFFECT
 #include "effect_layer.h"  /* from https://github.com/ygalanter/EffectLayer */
 #endif /* USE_SHADOW_TIME_EFFECT */
@@ -250,9 +253,6 @@ void cleanup_date()
 */
 void setup_bg_image(Window *window, uint32_t resource_id, GRect bounds)
 {
-    // Create GBitmap, then set to created BitmapLayer
-    background_bitmap = gbitmap_create_with_resource(resource_id);
-
     APP_LOG(APP_LOG_LEVEL_DEBUG, "%s() entry", __func__);
     APP_LOG(APP_LOG_LEVEL_DEBUG, "%s() bounds x=%d, y=%d, w=%d, h=%d", __func__, bounds.origin.x, bounds.origin.y, bounds.size.w, bounds.size.h);
     if (bounds.origin.x == 0 &&
@@ -265,6 +265,32 @@ void setup_bg_image(Window *window, uint32_t resource_id, GRect bounds)
     APP_LOG(APP_LOG_LEVEL_DEBUG, "%s() bounds x=%d, y=%d, w=%d, h=%d", __func__, bounds.origin.x, bounds.origin.y, bounds.size.w, bounds.size.h);
     background_layer = bitmap_layer_create(bounds);
 
+    // Create GBitmap, then set to created BitmapLayer
+    background_bitmap = gbitmap_create_with_resource(resource_id);
+    if (background_bitmap == NULL)
+    {
+        APP_LOG(APP_LOG_LEVEL_ERROR, "gbitmap_create_with_resource() returned NULL");
+    }
+    else
+    {
+        /* https://developer.getpebble.com/community/libraries/gbitmap-colour-palette-manipulator/ */
+        /*
+        spit_gbitmap_color_palette(background_bitmap);
+[DEBUG] e_manipulator.c:156: Palette has 4 items
+[DEBUG] e_manipulator.c:160: --Spit Palette Start--
+[DEBUG] e_manipulator.c:163: Palette[0] = GColorClear (alpha:0)
+[DEBUG] e_manipulator.c:163: Palette[1] = GColorBlack (alpha:1)
+[DEBUG] e_manipulator.c:163: Palette[2] = GColorBlack (alpha:2)
+[DEBUG] e_manipulator.c:163: Palette[3] = GColorBlack (alpha:3)
+[DEBUG] e_manipulator.c:166: --Spit Palette End--
+
+        */
+        
+        //GColor *tmp_palette = gbitmap_get_palette(background_bitmap);
+        // There are 3 non-transparent colors - original uses grays, all the greys are converted to black by SDK
+        //tmp_palette[1].argb = (tmp_palette[1].argb & 0xC0)| (GColorWhite.argb & 0x3F);
+    }
+
     bitmap_layer_set_bitmap(background_layer, background_bitmap);
 
 #ifdef PBL_BW
@@ -274,6 +300,7 @@ void setup_bg_image(Window *window, uint32_t resource_id, GRect bounds)
 #endif
 
     layer_add_child(window_get_root_layer(window), bitmap_layer_get_layer(background_layer));
+    replace_gbitmap_color(GColorBlack, time_color, background_bitmap, background_layer);
 }
 
 void cleanup_bg_image()
@@ -509,6 +536,7 @@ void deinit() {
 void in_recv_handler(DictionaryIterator *iterator, void *context)
 {
     Tuple *t=NULL;
+    GColor orig_foreground_color=time_color;
 
     APP_LOG(APP_LOG_LEVEL_DEBUG, "in_recv_handler() called");
     t = dict_read_first(iterator);
@@ -566,6 +594,9 @@ void in_recv_handler(DictionaryIterator *iterator, void *context)
         }
         t = dict_read_next(iterator);
     }
+
+    replace_gbitmap_color(orig_foreground_color, time_color, background_bitmap, background_layer);
+
 }
 
 
