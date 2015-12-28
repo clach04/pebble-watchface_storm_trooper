@@ -11,9 +11,10 @@
 #define IMAGE_RES_Y 132  /* NOTE if image res changes - this needs to change too! */
 
 
+/*
 #define DEFAULT_TIME_COLOR GColorBlack
 #define DEFAULT_BACKGROUND_COLOR GColorWhite
-
+*/
 
 #define BT_DISCONNECT_IMAGE RESOURCE_ID_IMAGE_BT_DISCONNECT
 
@@ -24,8 +25,11 @@
 
 #define BAT_FMT_STR "%d%%"
 
-#define DATE_FMT_STR "%b\n%d"  /* TODO review %d for day */
-#define MAX_DATE_STR "00\nAug"  /* if custom version of DATE_FMT_STR is set, MAX_DATE_STR  needs to be updated too */
+//#define DATE_FMT_STR "%b\n%d"  /* TODO review %d for day */
+//#define MAX_DATE_STR "00\nAug"  /* if custom version of DATE_FMT_STR is set, MAX_DATE_STR  needs to be updated too */
+#define DATE_FMT_STR "%a\n%b\n%d"  /* TODO review %d for day */
+#define MAX_DATE_STR "Thu\n00\nAug"  /* if custom version of DATE_FMT_STR is set, MAX_DATE_STR  needs to be updated too */
+
 
 
 #ifdef PBL_ROUND /* 180x180 */
