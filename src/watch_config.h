@@ -36,16 +36,20 @@
     /* Image at top of screen, centered horizontally */
     #define BG_IMAGE_GRECT GRect((180 - IMAGE_RES_X) / 2, 0, IMAGE_RES_X, IMAGE_RES_Y)
 
-    #define CLOCK_POS GRect(0, 136, 180, 180) /* bottom of screen for FONT_KEY_BITHAM_30_BLACK */
+    #define CLOCK_POS GRect(0, 120, 180, 180) /* bottom of screen for FONT_KEY_BITHAM_30_BLACK */
 
 /*TODO center/move right*/
     #define BT_POS GRect(0, 100, 180, 180) /* probably taller than really needed */
 
-    #define DATE_ALIGN GTextAlignmentCenter
-    #define DATE_POS GRect(0, 120, 180, 180) /* probably taller than really needed */
+    #define DATE_ALIGN GTextAlignmentRight
+    //#define DATE_POS GRect(115, 90, 50, 60) /* probably taller than really needed */
+    //#define DATE_POS GRect(125, 70, 50, 60) /* probably taller than really needed */
+    #define DATE_POS GRect(120, 70, 50, 60) /* probably taller than really needed */
+    #undef  DATE_FMT_STR
+    #define DATE_FMT_STR "%d\n%b\n%a"
 
-    #define BAT_ALIGN GTextAlignmentCenter
-    #define BAT_POS GRect(0, 140, 180, 180) /* probably taller than really needed */
+    #define BAT_ALIGN GTextAlignmentLeft
+    #define BAT_POS GRect(10, 90, 180, 180) /* probably taller than really needed */
 #else /* PBL_RECT 144x168*/
     /* Image at top of screen, centered horizontally */
     #define BG_IMAGE_GRECT GRect((144 - IMAGE_RES_X) / 2, 0,  IMAGE_RES_X, IMAGE_RES_Y)  // use same size as image. On Aplite can determine this at runtime but not Basalt
