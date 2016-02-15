@@ -26,14 +26,14 @@
 //#define FONT_SYSTEM_NAME FONT_KEY_BITHAM_30_BLACK /* works well if 144x144 image is used above, little wasted space */
 
 #define BAT_FMT_STR "%d%%"
+#define DRAW_BATTERY
+#undef DRAW_SMALL_BATTERY
+
 
 //#define DATE_FMT_STR "%b\n%d"  /* TODO review %d for day */
 //#define MAX_DATE_STR "00\nAug"  /* if custom version of DATE_FMT_STR is set, MAX_DATE_STR  needs to be updated too */
 #define DATE_FMT_STR "%a\n%b\n%d"  /* TODO review %d for day */
 #define MAX_DATE_STR "Thu\n00\nAug"  /* if custom version of DATE_FMT_STR is set, MAX_DATE_STR  needs to be updated too */
-
-#define DRAW_BATTERY
-#undef DRAW_SMALL_BATTERY
 
 
 #ifdef PBL_ROUND /* 180x180 */
@@ -67,9 +67,9 @@
     #define BT_POS GRect(0, 120, 144, 168) /* probably taller than really needed */
     #define DATE_POS GRect(0, 0, 144, 168) /* probably taller than really needed */
     #ifdef DRAW_BATTERY
-        #define BAT_POS GRect(0, 0, 144, 168) /* probably taller than really needed */
-    #else
         #define BAT_POS GRect(5, 5, 144, 168)
+    #else
+        #define BAT_POS GRect(0, 0, 144, 168) /* probably taller than really needed */
     #endif /* DRAW_BATTERY */
 #endif /* end of Round or rectangle */
 
