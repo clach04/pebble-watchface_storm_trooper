@@ -30,6 +30,8 @@
 #define DATE_FMT_STR "%a\n%b\n%d"  /* TODO review %d for day */
 #define MAX_DATE_STR "Thu\n00\nAug"  /* if custom version of DATE_FMT_STR is set, MAX_DATE_STR  needs to be updated too */
 
+#define DRAW_BATTERY
+#undef DRAW_SMALL_BATTERY
 
 
 #ifdef PBL_ROUND /* 180x180 */
@@ -62,7 +64,11 @@
 
     #define BT_POS GRect(0, 120, 144, 168) /* probably taller than really needed */
     #define DATE_POS GRect(0, 0, 144, 168) /* probably taller than really needed */
-    #define BAT_POS GRect(0, 0, 144, 168) /* probably taller than really needed */
+    #ifdef DRAW_BATTERY
+        #define BAT_POS GRect(0, 0, 144, 168) /* probably taller than really needed */
+    #else
+        #define BAT_POS GRect(5, 5, 144, 168)
+    #endif /* DRAW_BATTERY */
 #endif /* end of Round or rectangle */
 
 /* for screen shots and font testing

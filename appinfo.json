@@ -9,6 +9,7 @@
     ],
     "companyName": "clach04",
     "longName": "Storm Trooper",
+    "enableMultiJS": true,
     "projectType": "native",
     "resources": {
         "media": [
