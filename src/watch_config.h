@@ -10,6 +10,8 @@
 #define IMAGE_RES_X 125  /* NOTE if image res changes - this needs to change too! */
 #define IMAGE_RES_Y 132  /* NOTE if image res changes - this needs to change too! */
 
+#define HEALTH_POS GRect(0, 40, 144, 168)  // Not used
+#undef USE_HEALTH
 
 /*
 #define DEFAULT_TIME_COLOR GColorBlack
