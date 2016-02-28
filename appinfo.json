@@ -26,7 +26,7 @@
                 "type": "bitmap"
             },
             {
-                "file": "images/bluetooth_disconnect",
+                "file": "images/bluetooth_disconnect.png",
                 "name": "IMAGE_BT_DISCONNECT",
                 "targetPlatforms": null,
                 "type": "bitmap"
@@ -40,8 +40,8 @@
         "basalt",
         "chalk"
     ],
-    "uuid": "1d381a77-8e09-4abf-9123-55a8e95a3220",
-    "versionLabel": "0.1",
+    "uuid": "1be7f172-9563-4371-ad7f-8349f47a8400",
+    "versionLabel": "0.3",
     "watchapp": {
         "watchface": true
     }
