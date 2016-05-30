@@ -8,6 +8,7 @@
         "configurable"
     ],
     "companyName": "clach04",
+    "enableMultiJS": true,
     "longName": "Storm Trooper",
     "projectType": "native",
     "resources": {
@@ -41,7 +42,7 @@
         "chalk"
     ],
     "uuid": "1be7f172-9563-4371-ad7f-8349f47a8400",
-    "versionLabel": "0.3",
+    "versionLabel": "0.4",
     "watchapp": {
         "watchface": true
     }
