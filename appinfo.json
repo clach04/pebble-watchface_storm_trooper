@@ -9,7 +9,7 @@
     ],
     "companyName": "clach04",
     "enableMultiJS": true,
-    "longName": "Storm Trooper",
+    "longName": "Storm Trooper Outline",
     "projectType": "native",
     "resources": {
         "media": [
@@ -35,7 +35,7 @@
         ]
     },
     "sdkVersion": "3",
-    "shortName": "Storm Trooper",
+    "shortName": "Storm Trooper Outline",
     "targetPlatforms": [
         "basalt",
         "chalk"
