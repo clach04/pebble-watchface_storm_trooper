@@ -1,0 +1,52 @@
+{
+    "author": "clach04",
+    "dependencies": {},
+    "keywords": [],
+    "name": "storm-trooper-outline",
+    "pebble": {
+        "capabilities": [
+            "configurable"
+        ],
+        "displayName": "Storm Trooper Outline",
+        "enableMultiJS": true,
+        "messageKeys": {
+            "KEY_BACKGROUND_COLOR": 2,
+            "KEY_TIME_COLOR": 0,
+            "KEY_VIBRATE_ON_DISCONNECT": 1
+        },
+        "projectType": "native",
+        "resources": {
+            "media": [
+                {
+                    "file": "images/storm_trooper.png",
+                    "name": "IMAGE_MAIN",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/icon_28x28.png",
+                    "menuIcon": true,
+                    "name": "IMAGE_ICON",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/bluetooth_disconnect.png",
+                    "name": "IMAGE_BT_DISCONNECT",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                }
+            ]
+        },
+        "sdkVersion": "3",
+        "targetPlatforms": [
+            "basalt",
+            "chalk"
+        ],
+        "uuid": "b5adffd1-9e0d-44ec-a015-c87a02a85c7a",
+        "watchapp": {
+            "watchface": true
+        }
+    },
+    "version": "0.2.0"
+}
