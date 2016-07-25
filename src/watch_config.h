@@ -51,18 +51,18 @@
     #define BAT_ALIGN GTextAlignmentLeft
     #define BAT_POS GRect(10, 90, 180, 180) /* probably taller than really needed */
 #else /* PBL_RECT 144x168*/
-    /* Image at top of screen, centered horizontally */
-    #define BG_IMAGE_GRECT GRect((144 - IMAGE_RES_X) / 2, 0,  IMAGE_RES_X, IMAGE_RES_Y)  // use same size as image. On Aplite can determine this at runtime but not Basalt
+    /* Clock at top of screen, Image below and centered horizontally */
+    #define BG_IMAGE_GRECT GRect((144 - IMAGE_RES_X) / 2, 35,  IMAGE_RES_X, IMAGE_RES_Y)  // use same size as image. On Aplite can determine this at runtime but not Basalt
 
     //#define CLOCK_POS GRect(0, 136, 144, 168) /* bottom of screen for FONT_KEY_BITHAM_30_BLACK */
-    #define CLOCK_POS GRect(0, 118, 144, 168) /* bottom of screen for FONT_KEY_ROBOTO_BOLD_SUBSET_49 with one pixel border on bottom */
+    #define CLOCK_POS GRect(0, -15, 144, 168) /* bottom of screen for FONT_KEY_ROBOTO_BOLD_SUBSET_49 with one pixel border on bottom */
 
     //#define BT_DISCONNECT_IMAGE_GRECT GRect(144 - 20, 138, 20, 30)
     #define BT_DISCONNECT_IMAGE_GRECT GRect(144 - 20, 168 - (2 * 30 + 4), 20, 30)
 
     #define BT_POS GRect(0, 120, 144, 168) /* probably taller than really needed */
-    #define DATE_POS GRect(0, 0, 144, 168) /* probably taller than really needed */
-    #define BAT_POS GRect(0, 0, 144, 168) /* probably taller than really needed */
+    #define DATE_POS GRect(0, 35, 144, 168) /* probably taller than really needed */
+    #define BAT_POS GRect(0, 35, 144, 168) /* probably taller than really needed */
 #endif /* end of Round or rectangle */
 
 /* for screen shots and font testing
