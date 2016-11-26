@@ -1,19 +1,15 @@
 {
     "author": "clach04",
-    "dependencies": {},
+    "dependencies": {
+        "pebble-clay": "^1.0.1"
+    },
     "keywords": [],
-    "name": "storm-trooper",
+    "name": "storm-trooper-opaque",
     "pebble": {
         "capabilities": [
             "configurable"
         ],
-        "displayName": "Storm Trooper",
-        "enableMultiJS": true,
-        "messageKeys": {
-            "KEY_BACKGROUND_COLOR": 2,
-            "KEY_TIME_COLOR": 0,
-            "KEY_VIBRATE_ON_DISCONNECT": 1
-        },
+        "displayName": "Storm Trooper Opaque",
         "projectType": "native",
         "resources": {
             "media": [
@@ -37,12 +33,19 @@
                     "type": "bitmap"
                 }
             ]
-        },
+        "enableMultiJS": true,
+        "messageKeys": [
+            "TIME_COLOR",
+            "VIBRATE_ON_DISCONNECT",
+            "BACKGROUND_COLOR",
+            "MAJOR_VERSION"
+        ],
         "sdkVersion": "3",
         "targetPlatforms": [
             "aplite",
             "basalt",
             "chalk"
+            "diorite"
         ],
         "uuid": "1be7f172-9563-4371-ad7f-8349f47a8400",
         "watchapp": {
