@@ -21,8 +21,8 @@
         "resources": {
             "media": [
                 {
-                    "file": "images/bluetooth_disconnect.png",
-                    "name": "IMAGE_BT_DISCONNECT",
+                    "file": "images/storm_trooper.png",
+                    "name": "IMAGE_MAIN",
                     "targetPlatforms": null,
                     "type": "bitmap"
                 },
@@ -34,8 +34,8 @@
                     "type": "bitmap"
                 },
                 {
-                    "file": "images/storm_trooper.png",
-                    "name": "IMAGE_MAIN",
+                    "file": "images/bluetooth_disconnect.png",
+                    "name": "IMAGE_BT_DISCONNECT",
                     "targetPlatforms": null,
                     "type": "bitmap"
                 }
@@ -53,5 +53,5 @@
             "watchface": true
         }
     },
-    "version": "0.4.0"
+    "version": "0.5.0"
 }
