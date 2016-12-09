@@ -21,6 +21,12 @@
         "resources": {
             "media": [
                 {
+                    "file": "images/mute_icon_20x20.png",
+                    "name": "IMAGE_QUIET_TIME",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
                     "file": "images/storm_trooper.png",
                     "name": "IMAGE_MAIN",
                     "targetPlatforms": null,
