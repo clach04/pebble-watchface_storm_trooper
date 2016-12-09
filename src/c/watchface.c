@@ -396,6 +396,74 @@ void cleanup_battery()
 #endif /* DRAW_BATTERY */
 }
 
+#ifdef QUIET_TIME_IMAGE
+BitmapLayer *quiet_time_blayer=NULL;
+GBitmap     *quiet_time_bitmap=NULL;
+
+void handle_quiet_time(void)
+{
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "%s() entry", __func__);
+    if (quiet_time_is_active())
+    {
+        APP_LOG(APP_LOG_LEVEL_DEBUG, "%s() quiet_time_is_active", __func__);
+        bitmap_layer_set_bitmap(quiet_time_blayer, quiet_time_bitmap);
+    }
+    else
+    {
+        APP_LOG(APP_LOG_LEVEL_DEBUG, "%s() quiet_time_is_not_active", __func__);
+        bitmap_layer_set_bitmap(quiet_time_blayer, NULL);
+    }
+
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "%s() exit", __func__);
+}
+
+void setup_quiet_time(Window *window)
+{
+    GRect bounds;
+
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "%s() entry", __func__);
+    quiet_time_bitmap = gbitmap_create_with_resource(QUIET_TIME_IMAGE);
+
+    #ifdef QUIET_TIME_IMAGE_GRECT
+        bounds = QUIET_TIME_IMAGE_GRECT;
+    #else // QUIET_TIME_IMAGE_GRECT
+        // use whole watch screen, auto centered
+        bounds = layer_get_bounds(window_get_root_layer(window));
+    #endif // QUIET_TIME_IMAGE_GRECT
+
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "%s() bounds x=%d, y=%d, w=%d, h=%d", __func__, bounds.origin.x, bounds.origin.y, bounds.size.w, bounds.size.h);
+    quiet_time_blayer = bitmap_layer_create(bounds);
+
+    /* Do not attached image to layer (yet...) */
+    bitmap_layer_set_bitmap(quiet_time_blayer, NULL);
+
+#ifdef PBL_BW
+     bitmap_layer_set_compositing_mode(quiet_time_blayer, GCompOpAssign);
+#elif PBL_COLOR
+     bitmap_layer_set_compositing_mode(quiet_time_blayer, GCompOpSet);
+#endif
+    layer_add_child(window_get_root_layer(main_window), bitmap_layer_get_layer(quiet_time_blayer));
+
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "%s() exit", __func__);
+}
+
+void cleanup_quiet_time(void)
+{
+    /* Destroy GBitmap */
+    if (quiet_time_bitmap)
+    {
+        gbitmap_destroy(quiet_time_bitmap);
+    }
+
+    /* Destroy BitmapLayer */
+    if (quiet_time_blayer)
+    {
+        bitmap_layer_destroy(quiet_time_blayer);
+    }
+}
+#endif // QUIET_TIME_IMAGE
+
+
 #ifndef NO_TEXT_TIME_LAYER
 void setup_text_time(Window *window)
 {
@@ -550,11 +618,7 @@ void cleanup_bt_image()
 
 
 #ifndef NO_TEXT_TIME_LAYER
-void update_time() {
-    // Get a tm structure
-    time_t    temp = time(NULL);
-    struct tm *tick_time = localtime(&temp);
-
+void update_time(struct tm *tick_time) {
     // Create a long-lived buffer
     static char buffer[] = MAX_TIME_STR;
 
@@ -616,6 +680,10 @@ void update_time() {
     update_health();
 #endif /* USE_HEALTH */
 
+#ifdef QUIET_TIME_IMAGE
+    handle_quiet_time();
+#endif // QUIET_TIME_IMAGE
+
 #ifdef DEBUG_TIME_PAUSE
     psleep(DEBUG_TIME_PAUSE);
 #endif /* DEBUG_TIME_PAUSE */
@@ -662,8 +730,15 @@ void main_window_load(Window *window) {
     setup_health(window);
 #endif /* USE_HEALTH */
 
+#ifdef QUIET_TIME_IMAGE
+    setup_quiet_time(window);
+#endif // QUIET_TIME_IMAGE
+
     /* Make sure the time is displayed from the start */
-    update_time();
+    // Get a tm structure
+    time_t    temp = time(NULL);
+    struct tm *tick_time = localtime(&temp);
+    update_time(tick_time);
 
 #ifndef NO_BATTERY
     /* Ensure battery status is displayed from the start */
@@ -672,6 +747,11 @@ void main_window_load(Window *window) {
 }
 
 void main_window_unload(Window *window) {
+
+#ifdef QUIET_TIME_IMAGE
+    cleanup_quiet_time();
+#endif // QUIET_TIME_IMAGE
+
 #ifdef USE_HEALTH
     cleanup_health();
 #endif /* USE_HEALTH */
@@ -702,16 +782,20 @@ void main_window_unload(Window *window) {
     CLEANUP_TIME();
 
     /* unsubscribe events */
+#ifdef TIME_MACHINE
+    time_machine_tick_timer_service_unsubscribe();
+#else
     tick_timer_service_unsubscribe();
+#endif
 }
 
 void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
-    update_time();
+    update_time(tick_time);
 }
 
 #ifdef DEBUG_TIME
 void debug_tick_handler(struct tm *tick_time, TimeUnits units_changed) {
-    update_time();
+    update_time(tick_time);
 }
 #endif /* DEBUG_TIME */
 
@@ -876,7 +960,19 @@ void init()
     window_stack_push(main_window, true);
 
     /* Register events; TickTimerService, Battery */
+#ifdef TIME_MACHINE
+    time_t now = time(NULL);
+    struct tm* time_machine_start = localtime(&now);
+
+    // Override start time to midnight, (local time)
+    time_machine_start->tm_hour = time_machine_start->tm_min = 0;
+
+    time_machine_init(time_machine_start, TIME_MACHINE_MINUTES, 1000);  // accelerate minutes to seconds
+    //time_machine_init(time_machine_start, TIME_MACHINE_HOURS, 1000);  // accelerate hours to seconds
+    time_machine_tick_timer_service_subscribe(TICK_HANDLER_INTERVAL, TICK_HANDLER);
+#else
     tick_timer_service_subscribe(TICK_HANDLER_INTERVAL, TICK_HANDLER);
+#endif
 #ifdef DEBUG_TIME
     #ifndef DEBUG_TIME_SCREENSHOT
         tick_timer_service_subscribe(SECOND_UNIT, DEBUG_TICK_HANDLER);

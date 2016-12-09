@@ -5,6 +5,7 @@
 #undef FONT_NAME
 #undef FONT_SYSTEM_NAME  /* the default font system will be used */
 #undef DEBUG_TIME
+//#define USE_TIME_MACHINE  // NOTE mixing with DEBUG_TIME doesn't make sense
 
 #define BG_IMAGE RESOURCE_ID_IMAGE_MAIN
 #define IMAGE_RES_X 125  /* NOTE if image res changes - this needs to change too! */
@@ -31,6 +32,9 @@
 #define MAX_DATE_STR "Thu\n00\nAug"  /* if custom version of DATE_FMT_STR is set, MAX_DATE_STR  needs to be updated too */
 
 
+
+//#define QUIET_TIME_IMAGE RESOURCE_ID_IMAGE_QUIET_TIME
+//#define QUIET_TIME_IMAGE_GRECT GRect(20, 20, 20, 20)  // Example assumes a 20x20 image
 
 #ifdef PBL_ROUND /* 180x180 */
     /* Image at top of screen, centered horizontally */
