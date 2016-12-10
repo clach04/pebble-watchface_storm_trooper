@@ -403,8 +403,7 @@ GBitmap     *quiet_time_bitmap=NULL;
 void handle_quiet_time(void)
 {
     APP_LOG(APP_LOG_LEVEL_DEBUG, "%s() entry", __func__);
-    //if (quiet_time_is_active())
-    if (1)
+    if (quiet_time_is_active())
     {
         APP_LOG(APP_LOG_LEVEL_DEBUG, "%s() quiet_time_is_active", __func__);
         bitmap_layer_set_bitmap(quiet_time_blayer, quiet_time_bitmap);
