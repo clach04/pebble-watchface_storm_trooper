@@ -21,7 +21,7 @@
         "resources": {
             "media": [
                 {
-                    "file": "images/quiet_icon_17x17.png",
+                    "file": "images/quiet_time_red_white_14x14.png",
                     "name": "IMAGE_QUIET_TIME",
                     "targetPlatforms": null,
                     "type": "bitmap"
